@@ -16,9 +16,21 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 
-public class ProjectCreationOperation implements IRunnableWithProgress {
 
+/**
+ * Worker class to create a new sakalatex project. This class is called 
+ * by the new Project wizard, and creates the default directories in the current workspace for the
+ * project and the project main document sakala.tex
+ */
+public class ProjectCreationOperation implements IRunnableWithProgress {
 	@Override
+	/**
+	 * Run the project creation steps:
+	 * 1. create a .project descriptor with the sakalatex builder and nature
+	 * 2. create a working directory inside the workspace for the project with the projects name
+	 * 
+	 * @param monitor user interface progress bar
+	 */
 	public void run(IProgressMonitor monitor) throws InvocationTargetException,
 			InterruptedException {
 			

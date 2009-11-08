@@ -12,7 +12,11 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
+/**
+ * Layout of the project name page. Gui stuff.
+ * @author dendiz
+ *
+ */
 public class SakalatexWizardPage extends WizardPage {
 	private Text projectNameField;
 	protected SakalatexWizardPage(String pageName) {
@@ -21,6 +25,10 @@ public class SakalatexWizardPage extends WizardPage {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * create the project name input and label.
+	 * @param parent the container for the ui widgets
+	 */
 	@Override
 	public void createControl(Composite parent) {
 		// TODO Auto-generated method stub
