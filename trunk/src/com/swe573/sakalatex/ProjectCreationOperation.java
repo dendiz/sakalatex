@@ -23,7 +23,6 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
  * project and the project main document sakala.tex
  */
 public class ProjectCreationOperation implements IRunnableWithProgress {
-	@Override
 	/**
 	 * Run the project creation steps:
 	 * 1. create a .project descriptor with the sakalatex builder and nature
@@ -31,6 +30,7 @@ public class ProjectCreationOperation implements IRunnableWithProgress {
 	 * 
 	 * @param monitor user interface progress bar
 	 */
+	@Override
 	public void run(IProgressMonitor monitor) throws InvocationTargetException,
 			InterruptedException {
 			
