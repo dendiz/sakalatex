@@ -11,20 +11,35 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 
-
+/**
+ * New sakalatex project creation wizard dialogs
+ * Fired after File->new->projects->others->SakalatexProject
+ *
+ */
 public class SakalatexWizard extends Wizard implements INewWizard, IExecutableExtension {
 
+	/**
+	 * set the wizard title
+	 */
 	public SakalatexWizard() {
 		super();
 		setDialogSettings(Activator.getDefault().getDialogSettings());
 		setWindowTitle("Sakalatex Project creation");		
 	}
 
+	/**
+	 * add pages of the wizard. Current pages are:
+	 * 1. project name page.
+	 */
 	public void addPages() {
 		super.addPages();
 		addPage(new SakalatexWizardPage("first page"));
 	}
 	
+	/**
+	 * Actions to perform after the user presses the finish button.
+	 * @see ProjectCreationOperation
+	 */
 	@Override
 	public boolean performFinish() {
 		// TODO Auto-generated method stub

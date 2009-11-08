@@ -32,11 +32,26 @@ import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.part.WorkbenchPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 
+/**
+ * The PDF Builder class converts the sakala.tex main tex file
+ * in to a pdf file.
+ * Windows uses pdflatex.exe and linux variants use pdflatex
+ * Both OS need to have the executable in the path to execute them.
+ * @author dendiz
+ *
+ */
 public class PDFBuilder extends IncrementalProjectBuilder {
 	
 	public PDFBuilder() {
 		System.out.println("creating pdf builder");
 	}
+	
+	/**
+	 * Get a message console to redirect the pdflatex executable output
+	 * 
+	 * @param name name of the console.
+	 * @return MessageConsole instance
+	 */
    private MessageConsole findConsole(String name) {
 	      ConsolePlugin plugin = ConsolePlugin.getDefault();
 	      IConsoleManager conMan = plugin.getConsoleManager();
@@ -50,6 +65,9 @@ public class PDFBuilder extends IncrementalProjectBuilder {
 	      return myConsole;
 	   }
 
+   /**
+    * convert the source tex file into a pdf file using pdflatex
+    */
 	@Override
 	protected IProject[] build(int kind, Map args, IProgressMonitor monitor)
 			throws CoreException {
@@ -97,18 +115,4 @@ public class PDFBuilder extends IncrementalProjectBuilder {
 		
 		return null;
 	}
-	@Override
-	public ISchedulingRule getRule() {
-		// TODO Auto-generated method stub
-		return super.getRule();
-	}
-	@Override
-	public void setInitializationData(IConfigurationElement config,
-			String propertyName, Object data) throws CoreException {
-		// TODO Auto-generated method stub
-		System.out.println("pdfbuilder set init data");
-		super.setInitializationData(config, propertyName, data);
-	}
-	
-
 }
