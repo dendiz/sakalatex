@@ -4,9 +4,15 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.texteditor.AbstractTextEditor;
+import org.eclipse.ui.texteditor.IDocumentProvider;
+import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.jface.dialogs.MessageDialog;
 
 import com.swe573.sakalatex.Activator;
@@ -35,11 +41,17 @@ public class SampleAction implements IWorkbenchWindowActionDelegate {
 	 * @see IWorkbenchWindowActionDelegate#run
 	 */
 	public void run(IAction action) {
-		
-		MessageDialog.openInformation(
-			window.getShell(),
-			"Sakalatex",
-			"Hello, Eclipse world");
+		IWorkbenchPage[] pages = window.getPages();
+		IWorkbenchPage page = pages[0];
+		IEditorPart part = page.getActiveEditor();
+		if (! (part instanceof AbstractTextEditor)) {
+			System.out.println("active workbench part was not an instance of text editor.");
+			return;
+		}
+		ITextEditor editor = (ITextEditor) part;
+		IDocumentProvider dp = editor.getDocumentProvider();
+		IDocument doc = dp.getDocument(editor.getEditorInput());
+		doc.set("you shouldn't have clicked that toolbar button");
 	}
 
 	/**
