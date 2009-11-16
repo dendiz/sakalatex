@@ -29,6 +29,14 @@ public class SakalatextEditorConfiguration extends SourceViewerConfiguration {
         return pr;
 	}
 	
+    public IContentAssistant getContentAssistant(ISourceViewer sourceViewer) {
+        ContentAssistant ca = new ContentAssistant();
+        IContentAssistProcessor cap = new SakalCompletionProcessor();
+        ca.setContentAssistProcessor(cap, IDocument.DEFAULT_CONTENT_TYPE);
+        ca.setInformationControlCreator(getInformationControlCreator(sourceViewer));
+        return ca;
+     }
+
 	
 	
 	
