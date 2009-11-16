@@ -11,6 +11,7 @@ public class SakalEditor extends TextEditor {
 
 	public SakalEditor() {
 		super();
+		setSourceViewerConfiguration(new SakalatextEditorConfiguration(this));
 	}
 
 	public void dispose() {
