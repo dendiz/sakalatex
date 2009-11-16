@@ -1,22 +1,19 @@
 package com.swe573.sakalatex.actions;
 
-import org.eclipse.core.resources.IncrementalProjectBuilder;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
+
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
-import org.eclipse.jface.dialogs.MessageDialog;
-
-import com.swe573.sakalatex.Activator;
-import com.swe573.sakalatex.PDFBuilder;
 
 /**
  * Our sample action implements workbench action delegate.
@@ -26,12 +23,12 @@ import com.swe573.sakalatex.PDFBuilder;
  * delegated to it.
  * @see IWorkbenchWindowActionDelegate
  */
-public class SampleAction implements IWorkbenchWindowActionDelegate {
+public class CommentOutAction implements IWorkbenchWindowActionDelegate {
 	private IWorkbenchWindow window;
 	/**
 	 * The constructor.
 	 */
-	public SampleAction() {
+	public CommentOutAction() {
 	}
 
 	/**
@@ -49,9 +46,26 @@ public class SampleAction implements IWorkbenchWindowActionDelegate {
 			return;
 		}
 		ITextEditor editor = (ITextEditor) part;
-		IDocumentProvider dp = editor.getDocumentProvider();
-		IDocument doc = dp.getDocument(editor.getEditorInput());
-		doc.set("you shouldn't have clicked that toolbar button");
+		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
+		ISelection selection  = editor.getSelectionProvider().getSelection();
+		if(!(selection instanceof ITextSelection)) {
+			System.out.println("selection is not text");
+			return;
+		}
+		ITextSelection textselection = (ITextSelection) selection;
+		if (textselection.isEmpty()) System.out.println("selection was empty, probably a one liner");
+		int start = textselection.getStartLine();
+		int end = textselection.getEndLine();
+		try {
+			int offset = doc.getLineOffset(start);
+			int delta = Math.abs(end - start);
+			for(int i = 0;i<=delta;i++) {
+				offset = doc.getLineOffset(start+i);
+				doc.replace(offset, 0, "%");
+			}
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
