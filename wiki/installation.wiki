@@ -1,0 +1,16 @@
+#summary How to install the plugin
+= Using the update site =
+
+From eclipse 3.5:
+Help->Install new software->Add
+
+use this update site: http://dendiz.com/sakalatex
+click add.
+
+Now select the sakalatex package and install. 
+
+
+= Manual =
+
+download http://dendiz.com/sakalatex/plugins/com.swe573.sakalatex_1.0.0.200911092336.jar
+and copy the jar file into your eclipse installation folder into the directory dropins/ and restart eclipse.
