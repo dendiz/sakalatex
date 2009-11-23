@@ -36,7 +36,7 @@ public class SakalatexPreferencePage
 	 * restore itself.
 	 */
 	public void createFieldEditors() {
-		addField(new DirectoryFieldEditor("prefPDFLatexPath", "&PdfLatex Path:", getFieldEditorParent()));
+		addField(new FileFieldEditor("prefPDFLatexPath", "&PdfLatex Path:", getFieldEditorParent()));
 		addField(new StringFieldEditor("prefArguments", "&Arguments:", getFieldEditorParent()));
 	}
 
