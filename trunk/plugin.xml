@@ -73,7 +73,7 @@
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="com.swe573.sakalatex.preferences.PreferenceInitializer">
+            class="com.swe573.sakalatex.PreferenceInitializer">
       </initializer>
    </extension>
 
