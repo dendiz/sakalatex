@@ -8,18 +8,10 @@
             label="CommectActionSet"
             visible="true"
             id="com.swe573.sakalatex.actionSet">
-         <menu
-               label="Latex &amp;Menu"
-               id="LatexMenu">
-            <separator
-                  name="sampleGroup">
-            </separator>
-         </menu>
          <action
                label="comment-out"
                class="com.swe573.sakalatex.actions.CommentOutAction"
                tooltip="comment-out"
-               menubarPath="sampleMenu/sampleGroup"
                toolbarPath="sampleGroup"
                id="com.swe573.sakalatex.actions.commentout">
          </action>
