@@ -65,6 +65,7 @@ public class PDFBuilder extends IncrementalProjectBuilder {
 		String name = System.getProperty("os.name").toLowerCase();
 		String pdflatex = null;
 		pdflatex = Activator.getDefault().getPreferenceStore().getString("prefPDFLatexPath");
+		System.out.println("pdflatex executable:" + pdflatex);
 		if (pdflatex == null || pdflatex.equals("")) {
 			pdflatex = name.indexOf("windows") >= 0 ? "pdflatex.exe" : "pdflatex";
 		}
