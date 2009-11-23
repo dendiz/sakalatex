@@ -68,5 +68,13 @@
             class="com.swe573.sakalatex.PreferenceInitializer">
       </initializer>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="com.swe573.sakalatex.SakalatexPreferencePage"
+            id="com.swe573.sakalatex.SakalatexPreferencePage"
+            name="Sakalatex Pref">
+      </page>
+   </extension>
 
 </plugin>
