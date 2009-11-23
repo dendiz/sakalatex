@@ -1,4 +1,4 @@
-package com.swe573.sakalatex.preferences;
+package com.swe573.sakalatex;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;

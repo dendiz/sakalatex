@@ -1,4 +1,4 @@
-package com.swe573.sakalatex.preferences;
+package com.swe573.sakalatex;
 
 import org.eclipse.jface.preference.*;
 import org.eclipse.ui.IWorkbenchPreferencePage;
