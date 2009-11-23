@@ -70,5 +70,11 @@
             name="SakalatexEditor">
       </editor>
    </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.swe573.sakalatex.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
 
 </plugin>
