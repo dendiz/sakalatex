@@ -2,35 +2,20 @@ package com.swe573.sakalatex;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.jface.text.IDocumentExtension;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
-import org.eclipse.ui.part.WorkbenchPart;
-import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * The PDF Builder class converts the sakala.tex main tex file
@@ -79,7 +64,10 @@ public class PDFBuilder extends IncrementalProjectBuilder {
 		ArrayList<String> cmds = new ArrayList<String>();
 		String name = System.getProperty("os.name").toLowerCase();
 		String pdflatex = null;
-		pdflatex = name.indexOf("windows") >= 0 ? "pdflatex.exe" : "pdflatex";
+		pdflatex = Activator.getDefault().getPreferenceStore().getString("prefPDFLatexPath");
+		if (pdflatex == null || pdflatex.equals("")) {
+			pdflatex = name.indexOf("windows") >= 0 ? "pdflatex.exe" : "pdflatex";
+		}
 		cmds.add(pdflatex);
 		cmds.add("-interaction=nonstopmode");
 		ResourcesPlugin.getWorkspace().getRoot();
