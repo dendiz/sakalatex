@@ -42,6 +42,14 @@
                toolbarPath="sakaGroup"
                tooltip="hyperlink">
          </action>
+         <action
+               class="com.swe573.sakalatex.actions.RefreshPdfAction"
+               icon="icons/refresh.ico"
+               id="com.swe573.sakalatex.actions.refreshpdf"
+               label="refreshpdf"
+               style="push"
+               toolbarPath="sakaGroup">
+         </action>
       </actionSet>
    </extension>
    <extension
