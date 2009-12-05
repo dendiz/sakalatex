@@ -1,10 +1,19 @@
 package com.swe573.sakalatex;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -55,21 +64,38 @@ public class ProjectCreationOperation implements IRunnableWithProgress {
 			IPath pt2 = ResourcesPlugin.getWorkspace().getRoot().getLocation();
 			IPath proj = project.getFullPath();
 			String fullpath = pt2.toOSString() + proj.addTrailingSeparator().toOSString();
-			File f = new File(fullpath + "sakala.tex");
-			f.createNewFile();
-			String template = "%%Thisis a very basic article template.\n%%Thereis just one section and two subsections.\n\\documentclass{article}\n\\begin{document}\n　\\section{Title}\n\\subsection{Subtitle}\nPlain text.\n\\subsection{Another subtitle}\n\\end{document}";
-			FileWriter fw = new FileWriter(f);
-			fw.write(template);
-			fw.close();
+			
+			
+			// The list of files can also be retrieved as File objects
+			String filePath = Activator.getDefault().getBundle().getLocation();
+			filePath = filePath.substring(16)+"templates";
+			File templateDir = new File(filePath);
+			
+			
+			File[] templateFiles = templateDir.listFiles
+			(
+					new FilenameFilter() {
+		        public boolean accept(File dir, String name) {
+		            return name.endsWith(".tex_template");
+		        }
+		    });
+		    
+	        String template = "";
+	        if (templateFiles.length > 0) {
+	        	//for(int i = 0; i<templateFiles.length;i++){
+	        		template = Activator.readStream(new FileInputStream(templateFiles[0]));
+	        	//}
+	        }
+	        
+	        Activator.writeFile(fullpath + "sakala.tex", template);
+	        
+	        
 			project.refreshLocal(IProject.DEPTH_INFINITE, monitor);
 			monitor.done();
-		} catch (CoreException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 		
 	}
 
