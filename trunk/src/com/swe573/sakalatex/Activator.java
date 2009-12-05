@@ -21,6 +21,7 @@ public class Activator extends AbstractUIPlugin {
 	// The shared instance
 	private static Activator plugin;
 	public static String projectName = "sakalatexdefault";
+	public static String templateName = "";
 	private Object n;
 	
 	/**
