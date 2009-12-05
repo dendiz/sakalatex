@@ -105,5 +105,17 @@
             name="Sakalatex Pref">
       </page>
    </extension>
+   <extension
+         point="org.jpedal.eclipse.jpedal">
+   </extension>
+   <extension
+         point="org.eclipse.core.filesystem.filesystems">
+      <filesystem
+            scheme="sakalatex.filesystem1">
+         <run
+               class="sakalatex.FileSystem1">
+         </run>
+      </filesystem>
+   </extension>
 
 </plugin>

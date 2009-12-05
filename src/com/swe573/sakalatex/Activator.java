@@ -5,8 +5,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 
+
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -30,9 +38,20 @@ public class Activator extends AbstractUIPlugin {
 	public Activator() {
 	}
 
-	public static IProject getCurrentProject() {
-		return null;
+	public static void openEditor(String filename) {
+	    IWorkbenchPage page = Activator.getDefault().getWorkbench().getWorkbenchWindows()[0].getActivePage();//PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+	    IFile ifile =  Activator.getCurrentProject().getFile(filename);
+		IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(filename);
+		try {
+			page.openEditor(new FileEditorInput(ifile), desc.getId());
+		} catch (PartInitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+	public static IProject getCurrentProject() {
+        IResource res = SelectedResourceManager.getDefault().getSelectedResource();
+        return res == null ? null : res.getProject();	}
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
