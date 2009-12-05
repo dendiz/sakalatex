@@ -69,24 +69,9 @@ public class ProjectCreationOperation implements IRunnableWithProgress {
 			// The list of files can also be retrieved as File objects
 			String filePath = Activator.getDefault().getBundle().getLocation();
 			filePath = filePath.substring(16)+"templates";
-			File templateDir = new File(filePath);
+			String fullpath2 = filePath +"/"+ Activator.templateName+".tex_template";
 			
-			
-			File[] templateFiles = templateDir.listFiles
-			(
-					new FilenameFilter() {
-		        public boolean accept(File dir, String name) {
-		            return name.endsWith(".tex_template");
-		        }
-		    });
-		    
-	        String template = "";
-	        if (templateFiles.length > 0) {
-	        	//for(int i = 0; i<templateFiles.length;i++){
-	        		template = Activator.readStream(new FileInputStream(templateFiles[0]));
-	        	//}
-	        }
-	        
+			String template = Activator.readStream(new FileInputStream(fullpath2));
 	        Activator.writeFile(fullpath + "sakala.tex", template);
 	        
 	        
