@@ -9,18 +9,38 @@
             visible="true"
             id="com.swe573.sakalatex.actionSet">
          <action
-               label="comment-out"
-               class="com.swe573.sakalatex.actions.CommentOutAction"
-               tooltip="comment-out"
-               toolbarPath="sampleGroup"
-               id="com.swe573.sakalatex.actions.commentout">
-         </action>
-         <action
                class="com.swe573.sakalatex.actions.CommentInAction"
+               icon="icons/left.ico"
                id="com.swe573.sakalatex.actions.commentin"
                label="comment-in"
                style="push"
-               toolbarPath="sampleGroup">
+               toolbarPath="sakaGroup"
+               tooltip="comment-in">
+         </action>
+         <action
+               class="com.swe573.sakalatex.actions.CommentOutAction"
+               icon="icons/right.ico"
+               id="com.swe573.sakalatex.actions.commentout"
+               label="comment-out"
+               toolbarPath="sakaGroup"
+               tooltip="comment-out">
+         </action>
+         <action
+               class="com.swe573.sakalatex.actions.FootnoteAction"
+               id="com.swe573.sakalatex.actions.footnote"
+               label="footnote"
+               style="push"
+               toolbarPath="sakaGroup"
+               tooltip="footnote">
+         </action>
+         <action
+               class="com.swe573.sakalatex.actions.HyperlinkAction"
+               icon="icons/hyperlink.ico"
+               id="com.swe573.sakalatex.actions.hyperlink"
+               label="hyperlink"
+               style="push"
+               toolbarPath="sakaGroup"
+               tooltip="hyperlink">
          </action>
       </actionSet>
    </extension>
@@ -58,6 +78,7 @@
             contributorClass="com.swe573.sakalatex.SakalatexActionBarContributor"
             default="true"
             extensions="tex"
+            icon="icons/defter.ico"
             id="com.swe573.sakalatex.sakalatexEditor"
             name="SakalatexEditor">
       </editor>
