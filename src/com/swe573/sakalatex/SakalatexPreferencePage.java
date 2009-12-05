@@ -1,6 +1,9 @@
 package com.swe573.sakalatex;
 
 import org.eclipse.jface.preference.*;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import com.swe573.sakalatex.Activator;
@@ -23,6 +26,10 @@ public class SakalatexPreferencePage
 	extends FieldEditorPreferencePage
 	implements IWorkbenchPreferencePage {
 
+	public static final String PDFLATEX = "pdflatex";
+	public static final String PDEFLATEXARG = "pdflatexarg";
+	   
+    
 	public SakalatexPreferencePage() {
 		super(GRID);
 		setPreferenceStore(Activator.getDefault().getPreferenceStore());
@@ -36,8 +43,9 @@ public class SakalatexPreferencePage
 	 * restore itself.
 	 */
 	public void createFieldEditors() {
-		addField(new FileFieldEditor("prefPDFLatexPath", "&PdfLatex Path:", getFieldEditorParent()));
-		addField(new StringFieldEditor("prefArguments", "&Arguments:", getFieldEditorParent()));
+		addField(new FileFieldEditor(PDFLATEX, "&PdfLatex Path:", getFieldEditorParent()));
+		addField(new StringFieldEditor(PDEFLATEXARG, "&Arguments:", getFieldEditorParent()));
+		
 	}
 
 	/* (non-Javadoc)
@@ -46,4 +54,9 @@ public class SakalatexPreferencePage
 	public void init(IWorkbench workbench) {
 	}
 	
+	
+	public static Color getColor(String rgbColor) {
+		return new Color(Display.getCurrent(),
+                    PreferenceConverter.getColor(Activator.getDefault().getPreferenceStore(), rgbColor));
+	}
 }

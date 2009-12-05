@@ -27,6 +27,7 @@
          </action>
          <action
                class="com.swe573.sakalatex.actions.FootnoteAction"
+               icon="icons/foot.ico"
                id="com.swe573.sakalatex.actions.footnote"
                label="footnote"
                style="push"
@@ -74,10 +75,16 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
+            category="sakalatex.category"
             class="com.swe573.sakalatex.SakalatexWizard"
+            icon="icons/saka.ico"
             id="com.swe573.sakalatex.wizard1"
-            name="SakalatexProjectWizard">
+            name="Sakalatex Project Wizard">
       </wizard>
+      <category
+            id="sakalatex.category"
+            name="Sakalatex">
+      </category>
    </extension>
    <extension
          point="org.eclipse.ui.editors">
@@ -86,7 +93,7 @@
             contributorClass="com.swe573.sakalatex.SakalatexActionBarContributor"
             default="true"
             extensions="tex"
-            icon="icons/defter.ico"
+            icon="icons/doc.ico"
             id="com.swe573.sakalatex.sakalatexEditor"
             name="SakalatexEditor">
       </editor>
@@ -102,7 +109,13 @@
       <page
             class="com.swe573.sakalatex.SakalatexPreferencePage"
             id="com.swe573.sakalatex.SakalatexPreferencePage"
-            name="Sakalatex Pref">
+            name="Sakalatex Preferences">
+      </page>
+      <page
+            category="com.swe573.sakalatex.SakalatexPreferencePage"
+            class="com.swe573.sakalatex.SakalatexColorPreferencePage"
+            id="com.swe573.sakalatex.SakalatexColorPreferencePage"
+            name="Color">
       </page>
    </extension>
    <extension

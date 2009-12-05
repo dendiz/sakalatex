@@ -18,12 +18,13 @@ import org.eclipse.swt.widgets.Display;
 public class SakalTokenScanner extends RuleBasedScanner {
 
 	public SakalTokenScanner() {
-         Token string = new Token(new TextAttribute(new Color(Display.getCurrent(), 0,0,255)));
-         Token bracketToken = new Token(new TextAttribute(new Color(Display.getCurrent(), 0,255,255)));
-         Token squareToken = new Token(new TextAttribute(new Color(Display.getCurrent(), 0,0,255)));
-         Token numberToken = new Token(new TextAttribute(new Color(Display.getCurrent(), 0,0,255)));
-         Token commentToken = new Token(new TextAttribute(new Color(Display.getCurrent(), 0,0,255)));
-         Token commandToken = new Token(new TextAttribute(new Color(Display.getCurrent(), 255,0,255)));
+		
+         Token string = new Token(new TextAttribute(SakalatexColorPreferencePage.getColor(SakalatexColorPreferencePage.STRING)));
+         Token bracketToken = new Token(new TextAttribute(SakalatexColorPreferencePage.getColor(SakalatexColorPreferencePage.BRACKETS)));
+         Token squareToken = new Token(new TextAttribute(SakalatexColorPreferencePage.getColor(SakalatexColorPreferencePage.SQUARE)));
+         Token numberToken = new Token(new TextAttribute(SakalatexColorPreferencePage.getColor(SakalatexColorPreferencePage.NUMBER)));
+         Token commentToken = new Token(new TextAttribute(SakalatexColorPreferencePage.getColor(SakalatexColorPreferencePage.COMMENT)));
+         Token commandToken = new Token(new TextAttribute(SakalatexColorPreferencePage.getColor(SakalatexColorPreferencePage.COMMAND)));
          //add tokens for each reserved word
 //         for (int n = 0; n < Parser.KEYWORDS.length; n++) {
 //            rule.addWord(Parser.KEYWORDS[n], keyword);
