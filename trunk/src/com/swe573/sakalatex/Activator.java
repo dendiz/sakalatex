@@ -1,5 +1,10 @@
 package com.swe573.sakalatex;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -65,5 +70,37 @@ public class Activator extends AbstractUIPlugin {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 	
+    public static String readStream(InputStream in) throws IOException {
+        
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] buff = new byte[4096];
+        
+        int len = 0;
+        while ((len = in.read(buff)) == buff.length) {
+            out.write(buff);
+        }
+        
+        if (len > 0) {
+            out.write(buff, 0, len);
+        }
+        
+        in.close();
+        
+        return out.toString();
+    }
+
+    public static void writeFile(String fName, String str) throws Exception {
+    	FileWriter fw = null;
+    	try{
+    	fw = new FileWriter(fName);
+		fw.write(str);
+		}
+    	finally
+    	{
+    	 if(fw != null)
+    		 fw.close();
+    	}
+    }
+
 	
 }

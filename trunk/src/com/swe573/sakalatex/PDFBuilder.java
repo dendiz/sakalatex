@@ -91,7 +91,7 @@ public class PDFBuilder extends IncrementalProjectBuilder {
 
 		    // The process should be done now, but wait to be sure.
 //		    p.waitFor();
-		    System.out.println("programm terminated");
+		    System.out.println("program terminated");
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
