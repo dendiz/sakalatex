@@ -70,9 +70,13 @@ public class ProjectCreationOperation implements IRunnableWithProgress {
 			String filePath = Activator.getDefault().getBundle().getLocation();
 			filePath = filePath.substring(16)+"templates";
 			String fullpath2 = filePath +"/"+ Activator.templateName+".tex_template";
-			
-			String template = Activator.readStream(new FileInputStream(fullpath2));
-	        Activator.writeFile(fullpath + "sakala.tex", template);
+			String template = "";
+			if(Activator.templateName.equals("Blank")){
+				template = "\\documentclass{article}\n\\begin{document}\n\n\\section{Title}\n\n\\end{document}";
+			}else{
+			 template = Activator.readStream(new FileInputStream(fullpath2));
+			}
+			Activator.writeFile(fullpath + "sakala.tex", template);
 	        
 	        
 			project.refreshLocal(IProject.DEPTH_INFINITE, monitor);

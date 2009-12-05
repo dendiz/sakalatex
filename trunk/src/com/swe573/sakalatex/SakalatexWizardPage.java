@@ -91,6 +91,7 @@ public class SakalatexWizardPage extends WizardPage {
 	        }
 	    });
 	    
+		templateCombo.add("Blank");
         for(int i = 0;i<templateFiles.length;i++){
         	templateCombo.add(templateFiles[i].getName().substring(0,templateFiles[i].getName().indexOf(".tex_template")));
         }
