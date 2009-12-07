@@ -2,6 +2,7 @@
 = Minimum Requirements =
 
 You'll need at least eclipse 3.4
+
 You'll need the JPedal Plugin for the pdf preview within eclipse to work (http://www.jpedal.org)
 
 = Using the update site =
