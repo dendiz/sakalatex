@@ -7,3 +7,12 @@ type sakalatex into the filter box or select others->sakalatex wizard
 type in a name for your project.
 
 The project main file sakala.tex will be created. You may edit this file and create a pdf file if pdflatex is installed and is in your path.
+
+= Auto build =
+In the project menu if build automatically is checked then after every save operation a pdf file will be generated. 
+
+If the build automatically is not checked then to do a manual build do:
+  * Save the modified file
+  * CTRL + B
+
+this will generate a pdf file.
