@@ -10,8 +10,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
@@ -22,7 +25,7 @@ import org.osgi.framework.BundleContext;
  * The activator class controls the plug-in life cycle
  */
 public class Activator extends AbstractUIPlugin {
-
+	static IWorkbenchWindow currentWindow = null;
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.swe573.sakalatex";
 
@@ -121,6 +124,24 @@ public class Activator extends AbstractUIPlugin {
     		 fw.close();
     	}
     }
+
+    public static IWorkbenchWindow getCurrentView() {
+    
+    IWorkbench workbench = Activator.getDefault().getWorkbench();
+    
+    IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+    if (window == null) {
+        Display display = workbench.getDisplay();
+        display.syncExec(new Runnable() {
+            public void run() {
+                currentWindow = Activator.getDefault().getWorkbench().getActiveWorkbenchWindow();
+            }});
+        window = currentWindow;
+    }
+    return window;
+    }
+
+    
 
 	
 }

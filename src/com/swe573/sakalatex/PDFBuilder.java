@@ -37,7 +37,7 @@ import org.eclipse.ui.part.FileEditorInput;
  *
  */
 public class PDFBuilder extends IncrementalProjectBuilder {
-	static IWorkbenchWindow currentWindow = null;
+	
 	public PDFBuilder() {
 		System.out.println("creating pdf builder");
 	}
@@ -88,19 +88,9 @@ public class PDFBuilder extends IncrementalProjectBuilder {
 		String fullpath = pt2.toOSString() + proj.addTrailingSeparator().toOSString();
 		
 		
-		 IWorkbench workbench = Activator.getDefault().getWorkbench();
+		
 	        
-	        IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-	        if (window == null) {
-	            Display display = workbench.getDisplay();
-	            display.syncExec(new Runnable() {
-	                public void run() {
-	                    currentWindow = Activator.getDefault().getWorkbench().getActiveWorkbenchWindow();
-	                }});
-	            window = currentWindow;
-	        }
-	        
-	    String filename = window.getActivePage().getActiveEditor().getEditorInput().getName();
+	    String filename = Activator.getCurrentView().getActivePage().getActiveEditor().getEditorInput().getName();
 		
 		cmds.add(fullpath + filename /*"sakala.tex"*/);
 		

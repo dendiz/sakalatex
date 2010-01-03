@@ -18,16 +18,16 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
+
+
 
 import com.swe573.sakalatex.Activator;
 
-public class OutlineViewPart extends ViewPart {
-
+public class SakalatexContentOutlinePage extends ContentOutlinePage {
 	private TreeViewer viewer;
 	private TreeParent invisibleRoot;
 
@@ -89,8 +89,7 @@ public class OutlineViewPart extends ViewPart {
 		}
 
 		public TreeObject[] getChildren() {
-			return (TreeObject[]) children.toArray(new TreeObject[children
-					.size()]);
+			return (TreeObject[]) children.toArray(new TreeObject[children.size()]);
 		}
 
 		public boolean hasChildren() {
@@ -102,21 +101,21 @@ public class OutlineViewPart extends ViewPart {
 	class ViewContentProvider implements ITreeContentProvider {
 
 		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-			
+			initialize();
 		}
 
 		public void dispose() {
 		}
 
 		public Object[] getElements(Object parent) {
-			if (parent.equals(getViewSite())) {
+			//if (parent.equals(getViewSite())) {
 				if (invisibleRoot == null)
 					initialize();
 
 				return getChildren(invisibleRoot);
-			}
+			//}
 
-			return getChildren(parent);
+			//return getChildren(parent);
 		}
 
 		public Object getParent(Object child) {
@@ -189,14 +188,17 @@ public class OutlineViewPart extends ViewPart {
 		invisibleRoot.addChild(root);
 	}
 
-	public OutlineViewPart() {
+	public SakalatexContentOutlinePage() {
 	}
 
-	public void createPartControl(Composite parent) {
+	public void createControl(Composite parent) {
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		viewer.setContentProvider(new ViewContentProvider());
+		ViewContentProvider vcp = new ViewContentProvider();
+		viewer.setContentProvider(vcp);
 		viewer.setLabelProvider(new ViewLabelProvider());
-		viewer.setInput(getViewSite());
+
+		viewer.setInput(vcp.getChildren(invisibleRoot));
+		
 		hookContextMenu();
 		hookDoubleCLickAction();
 	}
