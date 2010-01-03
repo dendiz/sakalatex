@@ -1,4 +1,5 @@
 package com.swe573.sakalatex;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 
@@ -14,6 +15,10 @@ public class SakalEditor extends TextEditor {
 		super();
 		setSourceViewerConfiguration(new SakalatextEditorConfiguration(this));
 		this.getPreferenceStore().setValue(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_LINE_NUMBER_RULER, true);
+		
+	}
+	public IWorkbenchPage myPage(){
+	return getSite().getPage();
 	}
 
 	public void dispose() {
