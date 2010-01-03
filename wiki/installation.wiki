@@ -3,7 +3,7 @@
 
 You'll need at least eclipse 3.5
 
-You'll need the JPedal Plugin for the pdf preview within eclipse to work (http://www.jpedal.org)
+You'll need the JPedal Plugin for the pdf preview within eclipse to work (http://www.jpedal.org) or (http://test.topcu.gen.tr/jpedalpdf.zip)
 
 = Using the update site =
 
