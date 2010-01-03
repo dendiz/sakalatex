@@ -15,8 +15,11 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.ConsolePlugin;
@@ -34,7 +37,7 @@ import org.eclipse.ui.part.FileEditorInput;
  *
  */
 public class PDFBuilder extends IncrementalProjectBuilder {
-	
+	static IWorkbenchWindow currentWindow = null;
 	public PDFBuilder() {
 		System.out.println("creating pdf builder");
 	}
@@ -83,7 +86,23 @@ public class PDFBuilder extends IncrementalProjectBuilder {
 		IPath pt2 = ResourcesPlugin.getWorkspace().getRoot().getLocation();
 		IPath proj = super.getProject().getFullPath();
 		String fullpath = pt2.toOSString() + proj.addTrailingSeparator().toOSString();
-		cmds.add(fullpath + "sakala.tex");
+		
+		
+		 IWorkbench workbench = Activator.getDefault().getWorkbench();
+	        
+	        IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+	        if (window == null) {
+	            Display display = workbench.getDisplay();
+	            display.syncExec(new Runnable() {
+	                public void run() {
+	                    currentWindow = Activator.getDefault().getWorkbench().getActiveWorkbenchWindow();
+	                }});
+	            window = currentWindow;
+	        }
+	        
+	    String filename = window.getActivePage().getActiveEditor().getEditorInput().getName();
+		
+		cmds.add(fullpath + filename /*"sakala.tex"*/);
 		
 		ProcessBuilder launcher = new ProcessBuilder(cmds);
 		//Map<String, String> environment = launcher.environment();

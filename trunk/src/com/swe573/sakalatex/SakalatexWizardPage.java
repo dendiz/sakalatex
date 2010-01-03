@@ -3,6 +3,8 @@ package com.swe573.sakalatex;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 import javax.swing.JComboBox;
 
@@ -37,6 +39,7 @@ public class SakalatexWizardPage extends WizardPage {
 	 * create the project name input and label.
 	 * @param parent the container for the ui widgets
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void createControl(Composite parent) {
 		// TODO Auto-generated method stub
@@ -76,25 +79,25 @@ public class SakalatexWizardPage extends WizardPage {
 
         // add text field
         final Combo templateCombo = new Combo(composite, SWT.SINGLE | SWT.BORDER);
-        
+        ArrayList list = new ArrayList<String>();
      // The list of files can also be retrieved as File objects
-		String filePath = Activator.getDefault().getBundle().getLocation();
-		filePath = filePath.substring(16)+"templates";
-		File templateDir = new File(filePath);
-		
-		
-		File[] templateFiles = templateDir.listFiles
-		(
-			new FilenameFilter() {
-	        public boolean accept(File dir, String name) {
-	            return name.endsWith(".tex_template");
-	        }
-	    });
-	    
-		templateCombo.add("Blank");
-        for(int i = 0;i<templateFiles.length;i++){
-        	templateCombo.add(templateFiles[i].getName().substring(0,templateFiles[i].getName().indexOf(".tex_template")));
+ 
+        Enumeration templateEnum = Activator.getDefault().getBundle().getEntryPaths("templates/");
+
+        while (templateEnum.hasMoreElements()) {
+            String path = (String) templateEnum.nextElement();
+            if (path.endsWith(".tex_template")) {
+                list.add(path.substring(path.lastIndexOf('/')+1, path.lastIndexOf('.')));
+            }
         }
+    
+	
+		templateCombo.add("Blank");
+        
+		for(int i = 0;i<list.size();i++){
+        	templateCombo.add(list.get(i).toString());
+        }
+        
         
         templateCombo.setToolTipText("Templates");
         templateCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
