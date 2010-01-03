@@ -130,5 +130,14 @@
          </run>
       </filesystem>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="sakalatex.OutlineViewPart"
+            id="sakalatex.outlineview"
+            name="sakalatexoutlineview"
+            restorable="true">
+      </view>
+   </extension>
 
 </plugin>
