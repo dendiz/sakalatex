@@ -1,5 +1,6 @@
 #summary How to create a new sakalatex project
 
+= New Project =
 click file->new->other
 
 type sakalatex into the filter box or select others->sakalatex wizard
@@ -7,6 +8,14 @@ type sakalatex into the filter box or select others->sakalatex wizard
 type in a name for your project.
 
 The project main file sakala.tex will be created. You may edit this file and create a pdf file if pdflatex is installed and is in your path.
+
+
+= Existing documents =
+You must first import your existing tex files and libraries into your project.
+To do this:
+File -> import
+then choose the files you wish to import.
+Now you can build your existing tex files.
 
 = Auto build =
 In the project menu if build automatically is checked then after every save operation a pdf file will be generated. 
