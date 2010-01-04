@@ -43,7 +43,7 @@ public class SakalEditor extends TextEditor {
 	public Object getAdapter(Class required){
 		if(IContentOutlinePage.class.equals(required)){
 			if(outlinePage == null){
-				outlinePage =new SakalatexContentOutlinePage(); 
+				outlinePage =new SakalatexContentOutlinePage(this); 
 				return outlinePage;
 			}
 		}
