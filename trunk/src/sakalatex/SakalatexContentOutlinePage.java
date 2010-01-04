@@ -13,11 +13,14 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
@@ -28,218 +31,91 @@ import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import com.swe573.sakalatex.Activator;
 
 public class SakalatexContentOutlinePage extends ContentOutlinePage {
-	private TreeViewer viewer;
-	private TreeParent invisibleRoot;
+	private ITextEditor editor;
+	private IEditorInput input;
+	private OutlineContentProvider outlineContentProvider;
+	private OutlineLabelProvider outlineLabelProvider;
 
-	class TreeObject implements IAdaptable {
+	public SakalatexContentOutlinePage(ITextEditor editor)
+	{
+		super();
+		this.editor = editor;
+	}
 
-		private String name;
-		private TreeParent parent;
-		private IResource resouce;
+	public void createControl(Composite parent)
+	{
 
-		public TreeObject(String name) {
-			this.name = name;
-		}
+		super.createControl(parent);
+		TreeViewer viewer = getTreeViewer();
+		outlineContentProvider = new OutlineContentProvider(editor.getDocumentProvider());
+		viewer.setContentProvider(outlineContentProvider);
+		outlineLabelProvider = new OutlineLabelProvider();
+		viewer.setLabelProvider(outlineLabelProvider);
+		viewer.addSelectionChangedListener(this);
 
-		public String getName() {
-			return name;
-		}
+		//control is created after input is set
+		if (input != null)
+			viewer.setInput(input);
+	}
 
-		public void setParent(TreeParent parent) {
-			this.parent = parent;
-		}
+	/**
+	 * Sets the input of the outline page
+	 */
+	public void setInput(Object input)
+	{
+		this.input = (IEditorInput) input;
+		update();
+	}
 
-		public TreeParent getParent() {
-			return parent;
-		}
+	/*
+	 * Change in selection
+	 */
+	public void selectionChanged(SelectionChangedEvent event)
+	{
+		super.selectionChanged(event);
+		//find out which item in tree viewer we have selected, and set highlight range accordingly
 
-		public String toString() {
-			return getName();
-		}
-
-		public Object getAdapter(Class key) {
-			return null;
-		}
-
-		protected IResource getResouce() {
-			return resouce;
-		}
-
-		protected void setResouce(IResource resouce) {
-			this.resouce = resouce;
+		ISelection selection = event.getSelection();
+		if (selection.isEmpty())
+			editor.resetHighlightRange();
+		else
+		{
+//			XMLElement element = (XMLElement) ((IStructuredSelection) selection).getFirstElement();		
+//			
+//			int start = element.getPosition().getOffset();
+//			int length = element.getPosition().getLength();
+//			try
+//			{
+//				editor.setHighlightRange(start, length, true);
+//			}
+//			catch (IllegalArgumentException x)
+//			{
+//				editor.resetHighlightRange();
+//			}
 		}
 	}
 
-	class TreeParent extends TreeObject {
-		private ArrayList children;
+	/**
+	 * The editor is saved, so we should refresh representation
+	 * 
+	 * @param tableNamePositions
+	 */
+	public void update()
+	{
+		//set the input so that the outlines parse can be called
+		//update the tree viewer state
+		TreeViewer viewer = getTreeViewer();
 
-		public TreeParent(String name) {
-			super(name);
-			children = new ArrayList();
-		}
-
-		public void addChild(TreeObject child) {
-			children.add(child);
-			child.setParent(this);
-		}
-
-		public void removeChild(TreeObject child) {
-			children.remove(child);
-			child.setParent(null);
-		}
-
-		public TreeObject[] getChildren() {
-			return (TreeObject[]) children.toArray(new TreeObject[children.size()]);
-		}
-
-		public boolean hasChildren() {
-			return children.size() > 0;
-		}
-
-	}
-
-	class ViewContentProvider implements ITreeContentProvider {
-
-		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-			initialize();
-		}
-
-		public void dispose() {
-		}
-
-		public Object[] getElements(Object parent) {
-			//if (parent.equals(getViewSite())) {
-				if (invisibleRoot == null)
-					initialize();
-
-				return getChildren(invisibleRoot);
-			//}
-
-			//return getChildren(parent);
-		}
-
-		public Object getParent(Object child) {
-			if (child instanceof TreeObject) {
-				return ((TreeObject) child).getParent();
+		if (viewer != null)
+		{
+			Control control = viewer.getControl();
+			if (control != null && !control.isDisposed())
+			{
+				control.setRedraw(false);
+				viewer.setInput(input);
+				viewer.expandAll();
+				control.setRedraw(true);
 			}
-
-			return null;
 		}
-
-		public Object[] getChildren(Object parent) {
-
-			if (parent instanceof TreeParent) {
-				return ((TreeParent) parent).getChildren();
-			}
-
-			return new Object[0];
-		}
-
-		public boolean hasChildren(Object parent) {
-			if (parent instanceof TreeParent)
-				return ((TreeParent) parent).hasChildren();
-			return false;
-		}
-
-	}
-
-	class ViewLabelProvider extends LabelProvider {
-		public String getText(Object obj) {
-			return obj.toString();
-		}
-
-		public Image getImage(Object obj) {
-			// String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
-			//
-			// if (obj instanceof TreeParent)
-			// imageKey = ISharedImages.IMG_OBJ_FOLDER;
-			// return
-			// PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
-			return null;
-		}
-
-	}
-
-	public void initialize() {
-		TreeParent root = new TreeParent("Sakalatex Document Outline");
-		try {
-			IEditorPart ep= Activator.getCurrentView().getActivePage().getActiveEditor();
-			ITextEditor editor = (ITextEditor)ep;
-			IDocumentProvider dp = editor.getDocumentProvider();
-			IDocument doc = dp.getDocument(editor.getEditorInput());
-			String content= doc.get();
-			String[] stra = content.split("\\n");
-			
-			 Pattern SECTION_RE = Pattern.compile("\\\\section\\{([a-zA-Z]*)\\}");
-			 
-			for (int i = 0; i < stra.length; i++) {
-				Matcher matcher = SECTION_RE.matcher(stra[i]);
-				if (matcher.find()) {
-					TreeObject obj = new TreeObject(matcher.group(1));
-					root.addChild(obj);
-					
-				}
-
-			}
-		} catch (Exception e) {
-			// log exception
-		}
-		invisibleRoot = new TreeParent("");
-		invisibleRoot.addChild(root);
-	}
-
-	public SakalatexContentOutlinePage() {
-	}
-
-	public void createControl(Composite parent) {
-		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		ViewContentProvider vcp = new ViewContentProvider();
-		viewer.setContentProvider(vcp);
-		viewer.setLabelProvider(new ViewLabelProvider());
-
-		viewer.setInput(vcp.getChildren(invisibleRoot));
-		
-		hookContextMenu();
-		hookDoubleCLickAction();
-	}
-
-	private void hookDoubleCLickAction() {
-		viewer.addDoubleClickListener(new IDoubleClickListener() {
-			public void doubleClick(DoubleClickEvent event) {
-				ISelection selection = event.getSelection();
-				Object obj = ((IStructuredSelection) selection)
-						.getFirstElement();
-				if (!(obj instanceof TreeObject)) {
-					return;
-				} else {
-					return;
-
-				}
-			};
-		});
-	}
-
-	private void hookContextMenu() {
-		// MenuManager menuMgr = new MenuManager("#PopupMenu");
-		// Menu menu = menuMgr.createContextMenu(viewer.getControl());
-		// viewer.getControl().setMenu(menu);
-		// Action refresh =new Action() {
-		// public void run() {
-		// initialize();
-		// viewer.refresh();
-		// }
-		// };
-		// refresh.setText("Refresh");
-		// menuMgr.add(refresh);
-	}
-
-	public void setFocus() {
-		viewer.getControl().setFocus();
-	}
-
-	
-	public void update(){
-		initialize();
-		
 	}
 }
