@@ -53,9 +53,9 @@ public class WordLetterCountAction implements IWorkbenchWindowActionDelegate {
 					offset = doc.getLineOffset(i);
 					String line = content.substring(offset,offset + length).trim();
 					if(line.isEmpty())continue;
-					if(line.startsWith("%%")){
+					if(line.startsWith("%")){
 						inCommentLine = true;
-						line = line.replaceAll("%%", "");
+						line = line.replaceAll("%", "");
 					}
 					String[] s =line.split(" ");
 					if(inCommentLine){
