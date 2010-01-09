@@ -3,6 +3,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -36,6 +37,20 @@ public class WordLetterCountAction implements IWorkbenchWindowActionDelegate {
 		}
 		ITextEditor editor = (ITextEditor) part;
 		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
+	
+		ISelection selection  = editor.getSelectionProvider().getSelection();
+		if(!(selection instanceof ITextSelection)) {
+			System.out.println("selection is not text");
+			return;
+		}
+		ITextSelection textselection = (ITextSelection) selection;
+		if (textselection.isEmpty()) {
+			
+		}else
+		{
+		
+		}
+
 		
 		int wc = 0;
 		int wcInComments = 0;
@@ -57,15 +72,16 @@ public class WordLetterCountAction implements IWorkbenchWindowActionDelegate {
 						inCommentLine = true;
 						line = line.replaceAll("%", "");
 					}
+					line = line.replaceAll("\\{", " ").replaceAll("\\}", " ");
 					String[] s =line.split(" ");
 					if(inCommentLine){
 						wcInComments = s.length;
 					}else{
-					wc +=s.length;
+						wc +=s.length;
 					}
 					for(int j = 0;j<s.length;j++){
 						s[j] = s[j].trim();
-						if(!s[j].isEmpty()){
+						if(!s[j].isEmpty() && !s[j].startsWith("\\")){
 							if(inCommentLine)
 								lcInComments = lcInComments + s[j].length();
 							else
@@ -75,7 +91,7 @@ public class WordLetterCountAction implements IWorkbenchWindowActionDelegate {
 							if(inCommentLine){
 								wcInComments--;
 							}else{
-							wc--;
+								wc--;
 							}
 						}
 					}
