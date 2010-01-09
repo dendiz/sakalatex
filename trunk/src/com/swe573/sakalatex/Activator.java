@@ -1,14 +1,18 @@
 package com.swe573.sakalatex;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorDescriptor;
@@ -25,6 +29,8 @@ import org.osgi.framework.BundleContext;
  * The activator class controls the plug-in life cycle
  */
 public class Activator extends AbstractUIPlugin {
+
+	public static String newline = System.getProperty("line.separator");
 	static IWorkbenchWindow currentWindow = null;
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.swe573.sakalatex";
@@ -92,6 +98,10 @@ public class Activator extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
+	public static String readFile(String filename) throws IOException {
+		InputStream in =  new FileInputStream(filename);
+		return readStream(in);	
+	}
 	
     public static String readStream(InputStream in) throws IOException {
         
@@ -129,6 +139,7 @@ public class Activator extends AbstractUIPlugin {
     
     IWorkbench workbench = Activator.getDefault().getWorkbench();
     
+    
     IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
     if (window == null) {
         Display display = workbench.getDisplay();
@@ -141,7 +152,17 @@ public class Activator extends AbstractUIPlugin {
     return window;
     }
 
+    public static String getActiveFileFullPath(){
+		String fullpath = getActiveDirectoryFullPath();
+		String filename = Activator.getCurrentView().getActivePage().getActiveEditor().getEditorInput().getName(); 
+    	return fullpath+filename;
+    }
     
-
-	
+    public static String getActiveDirectoryFullPath(){
+		IPath pt2 = ResourcesPlugin.getWorkspace().getRoot().getLocation();
+		IPath proj = getCurrentProject().getFullPath();
+		String fullpath = pt2.toOSString()+proj.addTrailingSeparator().toOSString();
+		return fullpath;
+    }
+		
 }

@@ -1,24 +1,16 @@
 package com.swe573.sakalatex;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
-import sakalatex.OutlineViewPart;
-import sakalatex.SakalatexContentOutlinePage;
+import com.swe573.sakalatex.outline.SakalOutlinePage;
 
-
-
-/**
- * basic text editor to edit the source docs.
- * .tex extension is associated with this editor.
- * @author dendiz
- *
- */
 public class SakalEditor extends TextEditor {
 
-	SakalatexContentOutlinePage outlinePage = null;
+	SakalOutlinePage outlinePage = null;
 	public SakalEditor() {
 		super();
 		setSourceViewerConfiguration(new SakalatextEditorConfiguration(this));
@@ -43,11 +35,15 @@ public class SakalEditor extends TextEditor {
 	public Object getAdapter(Class required){
 		if(IContentOutlinePage.class.equals(required)){
 			if(outlinePage == null){
-				outlinePage =new SakalatexContentOutlinePage(this); 
+				outlinePage =new SakalOutlinePage(this); 
 				return outlinePage;
 			}
 		}
 		return super.getAdapter(required);
 		
 	}
+	
+	public ISourceViewer getViewer(){
+    	return getSourceViewer();
+    }
 }

@@ -1,40 +1,27 @@
 package com.swe573.sakalatex;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Enumeration;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 
 
 /**
- * Worker class to create a new sakalatex project. This class is called 
+ * Worker class to create a new com.swe573.sakalatex.outline.ex project. This class is called 
  * by the new Project wizard, and creates the default directories in the current workspace for the
  * project and the project main document sakala.tex
  */
 public class ProjectCreationOperation implements IRunnableWithProgress {
 	/**
 	 * Run the project creation steps:
-	 * 1. create a .project descriptor with the sakalatex builder and nature
+	 * 1. create a .project descriptor with the com.swe573.sakalatex.outline.ex builder and nature
 	 * 2. create a working directory inside the workspace for the project with the projects name
 	 * 
 	 * @param monitor user interface progress bar
@@ -52,7 +39,7 @@ public class ProjectCreationOperation implements IRunnableWithProgress {
 			IProject project = root.getProject(name);
 			monitor.worked(1);
 			IProjectDescription desc = project.getWorkspace().newProjectDescription(project.getName());
-			//IPath projectpath = new Path(project.getWorkspace().getRoot().getLocation().addTrailingSeparator().toOSString() + "sakalatex");
+			//IPath projectpath = new Path(project.getWorkspace().getRoot().getLocation().addTrailingSeparator().toOSString() + "com.swe573.sakalatex.outline.ex");
 			
 			desc.setName(project.getName());
 			project.create(desc, monitor);

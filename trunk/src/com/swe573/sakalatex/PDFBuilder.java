@@ -6,28 +6,16 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.eclipse.core.filesystem.EFS;
-import org.eclipse.core.filesystem.IFileStore;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IEditorDescriptor;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
-import org.eclipse.ui.ide.IDE;
-import org.eclipse.ui.part.FileEditorInput;
 /**
  * The PDF Builder class converts the sakala.tex main tex file
  * in to a pdf file.
@@ -83,26 +71,17 @@ public class PDFBuilder extends IncrementalProjectBuilder {
 		}
 		cmds.add(pdflatex);
 		cmds.add("-interaction=nonstopmode");
-		ResourcesPlugin.getWorkspace().getRoot();
-		IPath pt2 = ResourcesPlugin.getWorkspace().getRoot().getLocation();
-		IPath proj = super.getProject().getFullPath();
-		String fullpath = pt2.toOSString() + proj.addTrailingSeparator().toOSString();
-		
-		
 		
 	        
-	    String filename = Activator.getCurrentView().getActivePage().getActiveEditor().getEditorInput().getName();
-	    
 	    if(args.containsKey("FileName")){
-	    	filename = args.get("FileName").toString();
+	    	cmds.add(Activator.getActiveDirectoryFullPath()+args.get("FileName").toString());
+	    }else{
+	    	cmds.add(Activator.getActiveFileFullPath());
 	    }
-		
-		cmds.add(fullpath + filename /*"sakala.tex"*/);
-		
-		ProcessBuilder launcher = new ProcessBuilder(cmds);
-		//Map<String, String> environment = launcher.environment();
+	    
+	    ProcessBuilder launcher = new ProcessBuilder(cmds);
 		launcher.redirectErrorStream(true);
-		launcher.directory(new File(fullpath));
+		launcher.directory(new File(Activator.getActiveDirectoryFullPath()));
 		Process p;
 		try {
 			p = launcher.start();

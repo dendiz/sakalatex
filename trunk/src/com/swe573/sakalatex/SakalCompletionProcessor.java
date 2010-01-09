@@ -2,7 +2,6 @@ package com.swe573.sakalatex;
 
 import java.util.ArrayList;
 
-
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.CompletionProposal;

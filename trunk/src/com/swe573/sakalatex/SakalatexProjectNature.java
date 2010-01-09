@@ -4,10 +4,9 @@ import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IProjectNature;
-import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 /**
- * A Nature class to associate with the builder and sakalatex specific settings.
+ * A Nature class to associate with the builder and com.swe573.sakalatex.outline.ex specific settings.
  *
  */
 public class SakalatexProjectNature implements IProjectNature {

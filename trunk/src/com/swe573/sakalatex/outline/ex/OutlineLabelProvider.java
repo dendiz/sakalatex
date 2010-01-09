@@ -1,4 +1,4 @@
-package sakalatex;
+package com.swe573.sakalatex.outline.ex;
 
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
