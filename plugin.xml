@@ -60,6 +60,14 @@
                toolbarPath="sakaGroup"
                tooltip="Partiak Preview">
          </action>
+         <action
+               class="com.swe573.sakalatex.actions.WordLetterCountAction"
+               icon="icons/font.ico"
+               id="com.swe573.sakalatex.actions.WordLetterCountAction"
+               label="Word Letter Count"
+               style="push"
+               toolbarPath="sakaGroup">
+         </action>
       </actionSet>
    </extension>
    <extension
