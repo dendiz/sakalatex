@@ -40,6 +40,7 @@ public class PDFBuilder extends IncrementalProjectBuilder {
 	
 	public PDFBuilder() {
 		System.out.println("creating pdf builder");
+		
 	}
 	
 	/**
@@ -91,6 +92,10 @@ public class PDFBuilder extends IncrementalProjectBuilder {
 		
 	        
 	    String filename = Activator.getCurrentView().getActivePage().getActiveEditor().getEditorInput().getName();
+	    
+	    if(args.containsKey("FileName")){
+	    	filename = args.get("FileName").toString();
+	    }
 		
 		cmds.add(fullpath + filename /*"sakala.tex"*/);
 		

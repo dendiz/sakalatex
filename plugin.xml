@@ -51,6 +51,15 @@
                style="push"
                toolbarPath="sakaGroup">
          </action>
+         <action
+               class="com.swe573.sakalatex.actions.PartialPreviewAction"
+               icon="icons/search.ico"
+               id="com.swe573.sakalatex.actions.partialpreview"
+               label="partial preview"
+               style="push"
+               toolbarPath="sakaGroup"
+               tooltip="Partiak Preview">
+         </action>
       </actionSet>
    </extension>
    <extension
