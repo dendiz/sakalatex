@@ -12,8 +12,6 @@ import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.rules.WordRule;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Display;
 
 public class SakalTokenScanner extends RuleBasedScanner {
 

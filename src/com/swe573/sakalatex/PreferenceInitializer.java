@@ -3,10 +3,6 @@ package com.swe573.sakalatex;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Display;
-
-import com.swe573.sakalatex.Activator;
 
 /**
  * Class used to initialize default preference values.

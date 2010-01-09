@@ -1,16 +1,8 @@
 package com.swe573.sakalatex;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
-import javax.swing.JComboBox;
-
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;

@@ -1,4 +1,4 @@
-package sakalatex;
+package com.swe573.sakalatex.outline.ex;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;

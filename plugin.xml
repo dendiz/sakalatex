@@ -107,7 +107,7 @@
          point="org.eclipse.ui.editors">
       <editor
             class="com.swe573.sakalatex.SakalEditor"
-            contributorClass="com.swe573.sakalatex.SakalatexActionBarContributor"
+            contributorClass="com.swe573.sakalatex.SakalatexEditorActionContributor"
             default="true"
             extensions="tex"
             icon="icons/doc.ico"
@@ -143,14 +143,14 @@
       <filesystem
             scheme="sakalatex.filesystem1">
          <run
-               class="sakalatex.FileSystem1">
+               class="com.swe573.sakalatex.outline.ex.FileSystem1">
          </run>
       </filesystem>
    </extension>
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="sakalatex.OutlineViewPart"
+            class="com.swe573.sakalatex.outline.ex.OutlineViewPart"
             id="sakalatex.outlineview"
             name="sakalatexoutlineview"
             restorable="true">

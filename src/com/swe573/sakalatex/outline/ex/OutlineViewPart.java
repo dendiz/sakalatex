@@ -1,4 +1,4 @@
-package sakalatex;
+package com.swe573.sakalatex.outline.ex;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -18,7 +18,6 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.texteditor.IDocumentProvider;
