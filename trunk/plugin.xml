@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
-            label="CommectActionSet"
+            label="SakalatexActionSet"
             visible="true"
             id="com.swe573.sakalatex.actionSet">
          <action
@@ -58,7 +58,7 @@
                label="partial preview"
                style="push"
                toolbarPath="sakaGroup"
-               tooltip="Partiak Preview">
+               tooltip="Partial Preview">
          </action>
          <action
                class="com.swe573.sakalatex.actions.WordLetterCountAction"
